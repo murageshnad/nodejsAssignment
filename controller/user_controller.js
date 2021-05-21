@@ -56,7 +56,7 @@ exports.findAll = async (req, res) => {
 /**
  * Delete a user with the specified id in the request
  */
-exports.delete = (req, res) => {
+exports.delete = async (req, res) => {
   try {
     let user = await User.findByIdAndRemove(req.params.id);
     if (!user) {
@@ -77,20 +77,18 @@ exports.delete = (req, res) => {
 /**
  * Update a user with the specified id in the request
  */
-exports.UpdateUser = (req, res) => {
-  User.findByIdAndUpdate(req.params.id, req.body, { new: true })
-    .then((user) => {
-      console.log('user', user);
-      if (!user) {
-        return res.status(404).send({
-          message: "no user found",
-        });
-      }
-      res.status(200).send(user);
-    })
-    .catch((err) => {
+exports.UpdateUser = async (req, res) => {
+  try {
+    let user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!user) {
       return res.status(404).send({
-        message: "error while updating the post",
+        message: "no user found",
       });
+    }
+    res.status(200).send(user);
+  } catch (error) {
+    return res.status(404).send({
+      message: "error while updating the details",
     });
+  }
 };

@@ -35,23 +35,21 @@ exports.create = (req, res) => {
         message: err.message || "Some error occurred while creating the User.",
       });
     });
-
-
 };
+
 /**
  * Find all Users
  */
-exports.findAll = (req, res) => {
-  User.find()
-    .sort({ name: -1 })
-    .then((users) => {
-      res.status(200).send(users);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Error Occured",
-      });
+
+exports.findAll = async (req, res) => {
+  try {
+    let users = await User.find().sort({ name: -1 });
+    res.status(200).send(users);
+  } catch (error) {
+    res.status(500).send({
+      message: err.message || "Error Occured",
     });
+  }
 };
 
 

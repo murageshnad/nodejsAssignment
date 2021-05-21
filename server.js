@@ -12,5 +12,5 @@ app.use(bodyParser.json());
  */
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/", require("./routes/user_routes"));
-app.listen(5000);
+app.listen(4000);
 console.log("Listening to PORT 8000--");

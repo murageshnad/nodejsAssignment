@@ -5,7 +5,7 @@ const User = require("../models/user");
 /**
  * this method is to create the user
  */
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
   /**
    * validation request
    */
@@ -17,37 +17,32 @@ exports.create = (req, res) => {
   /**
    * Create a user
    */
-  var firstname = req.body.firstname;
-  var lastname = req.body.lastname;
   const user = new User({
     firstname: req.body.firstname,
     lastname: req.body.lastname,
   });
 
   ///Save user to database
-  user
-    .save()
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Some error occurred while creating the User.",
-      });
+  try {
+    let data = await user.save();
+    res.send(data);
+  } catch (error) {
+    res.status(500).send({
+      message: error.message || "Some error occurred while creating the User.",
     });
+  }
 };
 
 /**
  * Find all Users
  */
-
 exports.findAll = async (req, res) => {
   try {
     let users = await User.find().sort({ name: -1 });
     res.status(200).send(users);
   } catch (error) {
     res.status(500).send({
-      message: err.message || "Error Occured",
+      message: error.message || "Error Occured",
     });
   }
 };

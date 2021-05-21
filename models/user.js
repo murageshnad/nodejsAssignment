@@ -20,13 +20,5 @@ const schema = new mongoose.Schema(
   },
 );
 
-var User = module.exports = mongoose.model("User", schema);
+module.exports = mongoose.model("User", schema);
 
-module.exports.getUserByUsername = function (firstname, callback) {
-  var query = { firstname: firstname };
-  User.findOne(query, callback);
-};
-
-module.exports.createUser = function (newUser, callback) {
-  newUser.save(callback);
-};

@@ -57,20 +57,21 @@ exports.findAll = async (req, res) => {
  * Delete a user with the specified id in the request
  */
 exports.delete = (req, res) => {
-  User.findByIdAndRemove(req.params.id)
-    .then((user) => {
-      if (!user) {
-        return res.status(404).send({
-          message: "User not found ",
-        });
-      }
-      res.send({ message: "User deleted successfully!" });
-    })
-    .catch((err) => {
-      return res.status(500).send({
-        message: "Could not delete user ",
+  try {
+    let user = await User.findByIdAndRemove(req.params.id);
+    if (!user) {
+      return res.status(404).send({
+        message: "User not found ",
       });
+    }
+    else {
+      res.send({ message: "User deleted successfully!" });
+    }
+  } catch (error) {
+    return res.status(500).send({
+      message: "Could not delete user ",
     });
+  }
 };
 
 /**

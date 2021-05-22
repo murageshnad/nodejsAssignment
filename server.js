@@ -9,4 +9,4 @@ const router = express.Router();
 app.use(bodyParser.json());
 app.use("/", require("./routes/user_routes"));
 app.listen(4000);
-console.log("Listening to PORT 8000--");
+console.log("Listening to PORT 4000--");

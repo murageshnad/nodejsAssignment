@@ -1,5 +1,5 @@
 /**
- * routes using express middleware for routing
+ * routes using express
  */
 const express = require("express");
 const router = express.Router();
